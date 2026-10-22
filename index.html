@@ -37,11 +37,14 @@ h1 small{display:block;font-size:11px;color:var(--muted);letter-spacing:.12em;fo
 .total{background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:4px 14px;font-size:12px;color:var(--muted);white-space:nowrap;box-shadow:var(--shadow)}
 .total b{color:var(--accent-text);font-size:19px;font-weight:900;margin-right:2px}
 
-.series{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:12px 0 10px;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:4px}
-.series button{border:0;background:transparent;border-radius:12px;padding:8px 4px;font-weight:700;font-size:13.5px;line-height:1.3;color:var(--muted)}
+.series{display:flex;gap:4px;margin:12px 0 10px;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:4px;overflow-x:auto;scrollbar-width:none}
+.series::-webkit-scrollbar{display:none}
+.series button{flex:1 0 auto;white-space:nowrap;border:0;background:transparent;border-radius:12px;padding:8px 10px;font-weight:700;font-size:13px;line-height:1.3;color:var(--muted)}
 .series button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
 .series button[data-s="tp"][aria-pressed="true"]{background:var(--tp);color:var(--ink)}
 .series button[data-s="gs"][aria-pressed="true"]{background:var(--gs);color:var(--ink)}
+:root{--sm:#C6E9F5;--sm-soft:#EEF8FC}
+.series button[data-s="sm"][aria-pressed="true"]{background:var(--sm);color:var(--ink)}
 
 .searchrow{display:flex;gap:8px}
 .searchbox{flex:1;position:relative;min-width:0}
@@ -70,11 +73,18 @@ h1 small{display:block;font-size:11px;color:var(--muted);letter-spacing:.12em;fo
 .av{--c:var(--other);--cs:var(--other-soft);flex:none;width:38px;height:38px;border-radius:50%;background:var(--cs);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px;line-height:1;border:2px solid var(--surface);box-shadow:0 0 0 2px var(--c)}
 .item[data-s="tp"] .av{--c:var(--tp);--cs:var(--tp-soft)}
 .item[data-s="gs"] .av{--c:var(--gs);--cs:var(--gs-soft)}
-.item .main{flex:1;min-width:0;background:none;border:0;text-align:left;padding:0}
+.item[data-s="sm"] .av{--c:var(--sm);--cs:var(--sm-soft)}
+.item .main{flex:1;min-width:0;background:none;border:0;text-align:left;padding:0;display:flex;flex-direction:column;gap:5px}
 .item .name{font-weight:700;font-size:14.5px;line-height:1.35;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.item .sub{color:var(--muted);font-size:12px;line-height:1.4;margin-top:1px;display:flex;flex-wrap:wrap;gap:2px 6px;align-items:center}
+.item .sub{color:var(--muted);font-size:12px;line-height:1.4;margin-top:0;min-height:18px;display:flex;flex-wrap:wrap;gap:2px 6px;align-items:center}
 .tag{border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:11px}
-.counts{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.item .r1{display:flex;align-items:flex-start;justify-content:space-between;gap:6px}
+.item .r1 .name{flex:1;min-width:0}
+.item .r1 .counts{flex:none;max-width:48%;justify-content:flex-end;align-items:center;min-height:calc(14.5px * 1.35)}
+.item .sub{gap:2px 10px}
+.item .sub .mi{font-style:normal;font-size:11px;margin-right:3px}
+.item .cat{margin-top:0;min-height:18px;display:flex;align-items:center;line-height:1.4;color:var(--muted)}
+.counts{display:flex;flex-wrap:wrap;gap:4px}
 .cnt{font-size:11.5px;font-weight:700;border-radius:999px;padding:0 8px;line-height:1.6}
 .cnt.keep{background:var(--keep);color:var(--ink)}
 .cnt.trade{background:var(--trade);color:var(--ink)}
@@ -140,6 +150,8 @@ textarea.in{min-height:64px;resize:vertical}
 .seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
 #iseriesSeg button[data-v="tp"][aria-pressed="true"]{background:var(--tp);border-color:var(--tp);color:var(--ink)}
 #iseriesSeg button[data-v="gs"][aria-pressed="true"]{background:var(--gs);border-color:var(--gs);color:var(--ink)}
+#iseriesSeg button[data-v="sm"][aria-pressed="true"]{background:var(--sm);border-color:var(--sm);color:var(--ink)}
+#iseriesSeg{grid-template-columns:repeat(2,1fr)}
 .pills{display:flex;flex-wrap:wrap;gap:6px}
 .pill{border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:4px 12px;font-size:13px}
 .pill[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-text);font-weight:700}
@@ -183,6 +195,57 @@ textarea.in{min-height:64px;resize:vertical}
 .toast.act{pointer-events:auto;display:flex;align-items:center;gap:12px;padding:6px 6px 6px 16px}
 .toast .undo{border:0;background:var(--accent);color:var(--ink);border-radius:999px;padding:4px 12px;font-weight:700;font-size:12.5px;white-space:nowrap}
 .modenote{font-size:12px;color:var(--muted);margin-top:4px;text-align:center}
+/* 写真 */
+.av{overflow:hidden}
+.av.has-ph{background:var(--surface)}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-row{display:flex;align-items:center;gap:12px}
+.ph{flex:none;width:76px;height:76px;border-radius:16px;background:var(--bg);border:1.5px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:30px;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph-btns{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+dialog.crop{max-width:380px}
+.crop-box{position:relative;border-radius:16px;overflow:hidden;background:var(--bg);margin:4px 0 12px}
+.crop-box canvas{display:block;width:100%;height:auto;aspect-ratio:1/1;touch-action:none;cursor:grab}
+.crop-box::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:16px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.9);background:linear-gradient(to right,transparent calc(33.33% - .5px),rgba(255,255,255,.55) calc(33.33% - .5px),rgba(255,255,255,.55) calc(33.33% + .5px),transparent calc(33.33% + .5px),transparent calc(66.66% - .5px),rgba(255,255,255,.55) calc(66.66% - .5px),rgba(255,255,255,.55) calc(66.66% + .5px),transparent calc(66.66% + .5px)),linear-gradient(to bottom,transparent calc(33.33% - .5px),rgba(255,255,255,.55) calc(33.33% - .5px),rgba(255,255,255,.55) calc(33.33% + .5px),transparent calc(33.33% + .5px),transparent calc(66.66% - .5px),rgba(255,255,255,.55) calc(66.66% - .5px),rgba(255,255,255,.55) calc(66.66% + .5px),transparent calc(66.66% + .5px))}
+.crop-zoom{display:flex;align-items:center;gap:10px;margin:0 4px 16px;color:var(--muted);font-weight:700}
+.crop-zoom input{flex:1;accent-color:var(--accent)}
+/* 表示切り替え */
+.layout{flex:none;display:flex;align-items:center;gap:2px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 3px}
+.layout button{width:34px;height:34px;border:0;background:none;border-radius:999px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.layout button[aria-pressed="true"]{background:var(--accent);color:var(--ink)}
+/* タイル表示 */
+.list.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.list.grid .group{grid-column:1/-1;margin:8px 4px 0}
+.tile-in{height:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s}
+.tile-in:active{transform:scale(.97)}
+.tile-img{--cs:var(--other-soft);position:relative;aspect-ratio:1/1;background:var(--cs);display:flex;align-items:center;justify-content:center}
+.tile-in[data-s="tp"] .tile-img{--cs:var(--tp-soft)}
+.tile-in[data-s="gs"] .tile-img{--cs:var(--gs-soft)}
+.tile-in[data-s="sm"] .tile-img{--cs:var(--sm-soft)}
+.tile-img img{width:100%;height:100%;object-fit:cover;display:block}
+.tile-ic{font-size:36px;line-height:1}
+.tile-star{position:absolute;top:5px;right:6px;color:var(--gold);font-size:16px;line-height:1;text-shadow:0 0 3px #FFFFFF,0 0 3px #FFFFFF}
+.tile-badges{position:absolute;left:4px;bottom:4px;right:4px;display:flex;gap:3px;flex-wrap:wrap}
+.list.grid .tile-badges .cnt{font-size:10.5px;padding:1px 6px;line-height:1.5;box-shadow:0 1px 2px rgba(91,58,46,.15)}
+.tile-name{font-size:12px;font-weight:700;line-height:1.35;padding:6px 8px 8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+body.selecting .tile-in{border-style:dashed}
+.tile-in.picked{border-style:solid!important;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.tile-check{position:absolute;inset:0;background:rgba(249,198,214,.55);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;color:var(--ink)}
+/* ボタン内の文字を上下中央にそろえる（フォントの上下の余白差を打ち消す） */
+.btn,.tog{display:inline-flex;align-items:center;justify-content:center}
+@supports (text-box: trim-both cap alphabetic){
+  .btn,.chip,.pill,.tog,.seg button,.series button,.cnt,.tag,#selCount,.undo{text-box:trim-both cap alphabetic}
+  .btn{padding:14px 18px}
+  .btn.small{padding:10px 14px}
+  .chip{padding:9px 12px}
+  .pill{padding:8px 12px}
+  .tog{padding:11px 16px}
+  .seg button{padding:13px 4px}
+  .series button{padding:12px 10px}
+  .cnt{padding:4px 8px}
+  .tag{padding:3px 5px}
+  .toast .undo{padding:7px 12px}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -196,7 +259,8 @@ textarea.in{min-height:64px;resize:vertical}
     <div class="series" role="group" aria-label="作品で絞り込む">
       <button data-v="all" aria-pressed="true">すべて</button>
       <button data-v="tp" data-s="tp" aria-pressed="false">🎾 テニプリ</button>
-      <button data-v="gs" data-s="gs" aria-pressed="false">🌸 GS</button>
+      <button data-v="gs" data-s="gs" aria-pressed="false">🌸 ときメモGS</button>
+      <button data-v="sm" data-s="sm" aria-pressed="false">⛄ Snow Man</button>
     </div>
     <div class="searchrow">
       <div class="searchbox"><input class="search" id="q" type="search" placeholder="キャラ名・グッズ名で探す" aria-label="検索"></div>
@@ -205,6 +269,10 @@ textarea.in{min-height:64px;resize:vertical}
         <option value="char">キャラ別</option>
         <option value="name">名前順</option>
       </select>
+      <div class="layout" id="layout" role="group" aria-label="表示の切り替え">
+        <button type="button" data-l="list" aria-label="リスト表示"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg></button>
+        <button type="button" data-l="grid" aria-label="タイル表示"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8" fill="currentColor"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8" fill="currentColor"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8" fill="currentColor"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8" fill="currentColor"/></svg></button>
+      </div>
     </div>
     <div class="chips" id="chips" role="group" aria-label="状態で絞り込む"></div>
   </header>
@@ -257,14 +325,25 @@ textarea.in{min-height:64px;resize:vertical}
     <span class="f">作品</span>
     <div class="seg" id="iseriesSeg" role="group" aria-label="作品">
       <button type="button" data-v="tp">🎾 テニプリ</button>
-      <button type="button" data-v="gs">🌸 GS</button>
+      <button type="button" data-v="gs">🌸 ときメモGS</button>
+      <button type="button" data-v="sm">⛄ Snow Man</button>
       <button type="button" data-v="other">その他</button>
     </div>
 
     <label class="f" for="iname">グッズ名</label>
     <input class="in" id="iname" required placeholder="例：缶バッジ 2024 vol.2">
 
-    <label class="f" for="ichar">キャラ</label>
+    <span class="f">写真</span>
+    <div class="photo-row">
+      <div class="ph" id="phPrev" aria-hidden="true"></div>
+      <div class="ph-btns">
+        <button type="button" class="btn small" id="phPick">📷 写真を選ぶ</button>
+        <button type="button" class="btn small danger" id="phDel" hidden>写真を外す</button>
+      </div>
+      <input type="file" id="phFile" accept="image/*" hidden>
+    </div>
+
+    <label class="f" for="ichar">キャラ・メンバー</label>
     <div class="pills" id="charPills"></div>
     <input class="in" id="ichar" list="chars" placeholder="キャラ名を入力">
 
@@ -352,13 +431,22 @@ textarea.in{min-height:64px;resize:vertical}
       <label class="f" for="pChars">求める同種のキャラ</label>
       <input class="in" id="pChars" placeholder="例：宍戸亮・鳳長太郎">
     </div>
-    <div class="post">
-      <div class="meta"><span>投稿文</span><span id="pW"></span></div>
-      <textarea class="in" id="postText" aria-label="投稿文"></textarea>
-    </div>
+    <div id="posts"></div>
     <div class="actions">
       <button type="button" class="btn" id="pDone">選択を解除</button>
-      <div class="right"><button type="button" class="btn primary" id="pCopy">コピーする</button></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="cropDlg" class="pop crop" aria-labelledby="cropTitle">
+  <div class="popin">
+    <h3 id="cropTitle">写真の範囲を決める</h3>
+    <p>ドラッグで位置、スライダーか2本指で大きさを調整できます</p>
+    <div class="crop-box"><canvas id="cropCv" width="640" height="640" aria-label="切り抜き範囲"></canvas></div>
+    <div class="crop-zoom"><span aria-hidden="true">－</span><input type="range" id="cropZoom" min="1" max="4" step="0.01" value="1" aria-label="拡大"><span aria-hidden="true">＋</span></div>
+    <div class="pop-btns">
+      <button type="button" class="btn" id="cropNo">やめる</button>
+      <button type="button" class="btn primary" id="cropYes">決定</button>
     </div>
   </div>
 </dialog>
@@ -380,12 +468,13 @@ textarea.in{min-height:64px;resize:vertical}
 
 <script>
 (() => {
-const CATS = ["缶バッジ","アクリルスタンド","アクリルキーホルダー","ブロマイド","クリアファイル","ラバーストラップ","ぬいぐるみ","色紙","タペストリー","CD","DVD・Blu-ray","書籍・雑誌","ポストカード","トレーディングカード"];
+const CATS = ["缶バッジ","アクリルスタンド","アクリルキーホルダー","ブロマイド","クリアファイル","ラバーストラップ","ぬいぐるみ","色紙","タペストリー","CD","DVD・Blu-ray","書籍・雑誌","ポストカード","トレーディングカード","うちわ","ペンライト","公式写真","ステッカー","ウェア・タオル"];
 const CHARS = {
   tp:["越前リョーマ","手塚国光","不二周助","大石秀一郎","菊丸英二","乾貞治","河村隆","桃城武","海堂薫","跡部景吾","忍足侑士","宍戸亮","鳳長太郎","向日岳人","芥川慈郎","日吉若","樺地崇弘","幸村精市","真田弦一郎","柳蓮二","仁王雅治","柳生比呂士","丸井ブン太","ジャッカル桑原","切原赤也","白石蔵ノ介","千歳千里","財前光","遠山金太郎","忍足謙也","木手永四郎","観月はじめ","徳川カズヤ","種ヶ島修二","平等院鳳凰"],
-  gs:["葉月珪","守村桜弥","姫条まどか","鈴鹿和馬","日比谷渉","氷室零一","佐伯瑛","志波勝己","氷上格","針谷幸之進","若王子貴文","真咲元春","桜井琉夏","桜井琥一","紺野玉緒","設楽聖司","不二山嘉哉","新名旬平","柊夜ノ介","風真玲太","颯砂希","氷室一紀","本多行","七ツ森実","御影小次郎"]
+  gs:["葉月珪","守村桜弥","姫条まどか","鈴鹿和馬","日比谷渉","氷室零一","佐伯瑛","志波勝己","氷上格","針谷幸之進","若王子貴文","真咲元春","桜井琉夏","桜井琥一","紺野玉緒","設楽聖司","不二山嘉哉","新名旬平","柊夜ノ介","風真玲太","颯砂希","氷室一紀","本多行","七ツ森実","御影小次郎"],
+  sm:["岩本照","深澤辰哉","ラウール","渡辺翔太","向井康二","阿部亮平","目黒蓮","宮舘涼太","佐久間大介"]
 };
-const SERIES = {tp:"テニプリ",gs:"GS",other:"その他"};
+const SERIES = {tp:"テニプリ",gs:"ときメモGS",sm:"Snow Man",other:"その他"};
 const FILTERS = [["all","すべて"],["fav","★ お気に入り"],["keep","🏠 所持"],["trade","🔁 交換"],["sell","🎁 譲る"],["want","🔍 探し中"]];
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -394,13 +483,18 @@ let items = [];
 let selecting = false;
 const picked = new Set();
 let loaded = false;
-const view = {series:"all", status:"all", q:"", sort:"updated"};
+const view = {series:"all", status:"all", q:"", sort:"updated", layout:"list"};
+try{ if (localStorage.getItem("goods-shelf-layout") === "grid") view.layout = "grid"; }catch{}
+const isPhoto = p => typeof p === "string" && p.startsWith("data:image/");
 let mode = "loading", col = null, downloads = null, sample = null, mcpNs = null;
 
 // ---------- store ----------
 const LS = "goods-shelf-items";
 function loadLocal(){ try{ items = JSON.parse(localStorage.getItem(LS) || "[]"); }catch{ items = []; } }
-function saveLocal(){ try{ localStorage.setItem(LS, JSON.stringify(items)); }catch{} }
+function saveLocal(){
+  try{ localStorage.setItem(LS, JSON.stringify(items)); return true; }
+  catch{ toast("端末の保存容量がいっぱいです。写真を外すか、不要なグッズを削除してください"); return false; }
+}
 
 async function init(){
   render();
@@ -433,9 +527,11 @@ async function putItem(it){
     try{ await col.doc(id).set(JSON.parse(JSON.stringify(body))); }
     catch(e){ toast(e && e.code === "quota_exceeded" ? "保存できる上限に達しました。不要なグッズを削除してください。" : "保存できませんでした。もう一度お試しください。"); throw e; }
   } else {
+    const prev = items.slice();
     const i = items.findIndex(x=>x.id===it.id);
     if (i>=0) items[i]=it; else items.push(it);
-    saveLocal(); render();
+    if (!saveLocal()){ items = prev; render(); throw new Error("quota"); }
+    render();
   }
 }
 async function removeItem(id){
@@ -482,6 +578,7 @@ const CAT_ICONS = [
   [/Tシャツ|タオル|ウェア|パーカー/i,"👕"],
   [/ポーチ|バッグ|トート/,"👜"],
   [/うちわ/,"🎐"],
+  [/ペンライト/,"🪄"],
   [/マグ|グラス|食器/,"☕"]
 ];
 const catIcon = cat => { const c = String(cat||""); for (const [re, ic] of CAT_ICONS) if (re.test(c)) return ic; return "✨"; };
@@ -505,10 +602,9 @@ function itemHTML(it){
   const isPicked = picked.has(it.id);
   const initial = isPicked ? "✓" : catIcon(it.category);
   const sub = [
-    it.character ? `<span>${esc(it.character)}</span>` : "",
-    it.category ? `<span class="tag">${esc(it.category)}</span>` : "",
-    it.release ? `<span>${esc(it.release)}</span>` : "",
-    it.listPrice ? `<span>${esc(it.listPrice)}</span>` : ""
+    it.character ? `<span><i class="mi" aria-label="キャラ">👤</i>${esc(it.character)}</span>` : "",
+    it.listPrice ? `<span><i class="mi" aria-label="価格">💴</i>${esc(it.listPrice)}</span>` : "",
+    it.release ? `<span><i class="mi" aria-label="発売日">📅</i>${esc(it.release)}</span>` : ""
   ].join("");
   return `<li class="sw" data-id="${esc(it.id)}">
    <div class="sw-acts">
@@ -516,11 +612,14 @@ function itemHTML(it){
     <button class="sw-btn del" data-act="del" aria-label="削除" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
    </div>
    <div class="item${isPicked?" picked":""}" data-s="${esc(it.series)}">
-    <span class="av" aria-hidden="true">${esc(initial)}</span>
+    <span class="av${isPhoto(it.photo) && !isPicked ? " has-ph" : ""}" aria-hidden="true">${isPhoto(it.photo) && !isPicked ? `<img src="${esc(it.photo)}" alt="">` : esc(initial)}</span>
     <button class="main" data-edit="${esc(it.id)}">
-      <div class="name">${esc(it.name)}</div>
+      <div class="r1">
+        <div class="name">${esc(it.name)}</div>
+        ${cnts.length?`<div class="counts">${cnts.join("")}</div>`:""}
+      </div>
+      ${it.category?`<div class="cat"><span class="tag">${esc(it.category)}</span></div>`:""}
       ${sub?`<div class="sub">${sub}</div>`:""}
-      ${cnts.length?`<div class="counts">${cnts.join("")}</div>`:""}
     </button>
     <button class="star" data-star="${esc(it.id)}" aria-pressed="${!!it.fav}" aria-label="お気に入り">★</button>
    </div>
@@ -540,15 +639,18 @@ function render(){
   const list = $("#list"), empty = $("#empty");
   if (!loaded){ list.innerHTML=""; empty.hidden=true; return; }
   const arr = visible();
+  const card = view.layout === "grid" ? tileHTML : itemHTML;
+  list.className = "list" + (view.layout === "grid" ? " grid" : "");
+  document.querySelectorAll("#layout button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === view.layout));
   if (view.sort==="char"){
     let html = "", cur = null;
     for (const it of arr){
       const g = it.character || "キャラ指定なし";
       if (g !== cur){ cur = g; html += `<li class="group">${esc(g)}　${arr.filter(x=>(x.character||"キャラ指定なし")===g).length}件</li>`; }
-      html += itemHTML(it);
+      html += card(it);
     }
     list.innerHTML = html;
-  } else list.innerHTML = arr.map(itemHTML).join("");
+  } else list.innerHTML = arr.map(card).join("");
 
   if (!arr.length){
     empty.hidden = false;
@@ -574,6 +676,119 @@ $("#chips").addEventListener("click", e=>{
 });
 $("#q").addEventListener("input", e=>{ view.q = e.target.value; render(); });
 $("#sort").addEventListener("change", e=>{ view.sort = e.target.value; render(); });
+// ---------- tile view / photos ----------
+function tileHTML(it){
+  const isPicked = picked.has(it.id);
+  const b = [];
+  if (n(it.keep)) b.push(`<span class="cnt keep">手${n(it.keep)}</span>`);
+  if (n(it.trade)) b.push(`<span class="cnt trade">交${n(it.trade)}</span>`);
+  if (n(it.sell)) b.push(`<span class="cnt sell">譲${n(it.sell)}</span>`);
+  if (it.want) b.push(`<span class="cnt want">探</span>`);
+  return `<li class="tile" data-id="${esc(it.id)}">
+    <div class="tile-in${isPicked ? " picked" : ""}" data-s="${esc(it.series)}" role="button" tabindex="0" aria-label="${esc(it.name)}">
+      <div class="tile-img">
+        ${isPhoto(it.photo) ? `<img src="${esc(it.photo)}" alt="">` : `<span class="tile-ic" aria-hidden="true">${catIcon(it.category)}</span>`}
+        ${it.fav ? `<span class="tile-star" aria-label="お気に入り">★</span>` : ""}
+        ${b.length ? `<div class="tile-badges">${b.join("")}</div>` : ""}
+        ${isPicked ? `<span class="tile-check" aria-hidden="true">✓</span>` : ""}
+      </div>
+      <div class="tile-name">${esc(it.name)}</div>
+    </div>
+  </li>`;
+}
+$("#layout").addEventListener("click", e => {
+  const b = e.target.closest("[data-l]"); if (!b) return;
+  view.layout = b.dataset.l;
+  try{ localStorage.setItem("goods-shelf-layout", view.layout); }catch{}
+  render();
+});
+$("#list").addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("tile-in")){ e.preventDefault(); e.target.click(); }
+});
+
+let curPhoto = "";
+function renderPh(){
+  const p = $("#phPrev");
+  p.innerHTML = curPhoto ? `<img src="${esc(curPhoto)}" alt="">` : `<span>${catIcon($("#icat").value)}</span>`;
+  $("#phDel").hidden = !curPhoto;
+  $("#phPick").textContent = curPhoto ? "📷 写真を変える" : "📷 写真を選ぶ";
+}
+async function loadImage(file){
+  if (window.createImageBitmap){ try{ return await createImageBitmap(file); }catch{} }
+  return await new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = r.result; };
+    r.onerror = rej; r.readAsDataURL(file);
+  });
+}
+function cropImage(src){
+  return new Promise(res => {
+    const d = $("#cropDlg"), cv = $("#cropCv"), ctx = cv.getContext("2d"), V = cv.width;
+    const w = src.width, h = src.height, base = Math.max(V / w, V / h);
+    let z = 1, s = base, ox = (V - w * s) / 2, oy = (V - h * s) * 0.3;
+    const clamp = () => { ox = Math.min(0, Math.max(V - w * s, ox)); oy = Math.min(0, Math.max(V - h * s, oy)); };
+    const draw = () => { ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, V, V); ctx.drawImage(src, ox, oy, w * s, h * s); };
+    const setZoom = (nz, cx = V / 2, cy = V / 2) => {
+      nz = Math.min(4, Math.max(1, nz));
+      const ns = base * nz;
+      ox = cx - (cx - ox) * ns / s; oy = cy - (cy - oy) * ns / s;
+      z = nz; s = ns; clamp(); draw();
+      $("#cropZoom").value = z;
+    };
+    clamp(); draw(); $("#cropZoom").value = 1;
+    const pts = new Map(); let pinch = null;
+    const ratio = () => V / cv.getBoundingClientRect().width;
+    cv.onpointerdown = e => {
+      try{ cv.setPointerCapture(e.pointerId); }catch{}
+      pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+      if (pts.size === 2){ const [a, b] = [...pts.values()]; pinch = {d: Math.hypot(a.x - b.x, a.y - b.y) || 1, z}; }
+    };
+    cv.onpointermove = e => {
+      const p = pts.get(e.pointerId); if (!p) return;
+      const r = ratio();
+      if (pts.size === 1){ ox += (e.clientX - p.x) * r; oy += (e.clientY - p.y) * r; clamp(); draw(); }
+      pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+      if (pts.size === 2 && pinch){
+        const [a, b] = [...pts.values()];
+        const rect = cv.getBoundingClientRect();
+        setZoom(pinch.z * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d, ((a.x + b.x) / 2 - rect.left) * r, ((a.y + b.y) / 2 - rect.top) * r);
+      }
+    };
+    const up = e => { pts.delete(e.pointerId); if (pts.size < 2) pinch = null; };
+    cv.onpointerup = up; cv.onpointercancel = up;
+    $("#cropZoom").oninput = e => setZoom(Number(e.target.value));
+    const done = v => { if (d.open) d.close(); res(v); };
+    $("#cropNo").onclick = () => done(null);
+    d.oncancel = e => { e.preventDefault(); done(null); };
+    $("#cropYes").onclick = () => {
+      const S = 320, k = S / V, c = document.createElement("canvas");
+      c.width = S; c.height = S;
+      const x = c.getContext("2d");
+      x.fillStyle = "#FFFFFF"; x.fillRect(0, 0, S, S);
+      x.drawImage(src, ox * k, oy * k, w * s * k, h * s * k);
+      let q = 0.78, out = c.toDataURL("image/jpeg", q);
+      while (out.length > 60000 && q > 0.4){ q -= 0.1; out = c.toDataURL("image/jpeg", q); }
+      done(out);
+    };
+    d.showModal();
+  });
+}
+$("#phPick").onclick = () => $("#phFile").click();
+$("#phFile").onchange = async e => {
+  const f = e.target.files?.[0]; e.target.value = "";
+  if (!f) return;
+  if (!/^image\//.test(f.type || "image/")){ toast("画像ファイルを選んでください"); return; }
+  $("#phPick").disabled = true;
+  try{
+    const img = await loadImage(f);
+    const out = await cropImage(img);
+    if (out){ curPhoto = out; renderPh(); }
+  }
+  catch{ toast("この写真は読み込めませんでした。別の写真でお試しください"); }
+  $("#phPick").disabled = false;
+};
+$("#phDel").onclick = () => { curPhoto = ""; renderPh(); };
+
 // ---------- swipe actions ----------
 const SW_OPEN = -124;
 let swOpen = null, sw = null, suppressClick = false;
@@ -677,6 +892,7 @@ function openEdit(it){
   $("#irel").value = it?.release || "";
   $("#ilist").value = it?.listPrice || "";
   $("#imemo").value = it?.memo || "";
+  curPhoto = isPhoto(it?.photo) ? it.photo : ""; renderPh();
   setSeries(it?.series || (view.series!=="all" ? view.series : "tp"));
   renderCatPills();
   counts = {keep:n(it?.keep ?? 1), trade:n(it?.trade), sell:n(it?.sell)};
@@ -692,9 +908,9 @@ $("#charPills").addEventListener("click", e=>{ const b=e.target.closest("[data-c
 $("#ichar").addEventListener("input", renderCharPills);
 $("#catPills").addEventListener("click", e=>{
   const b=e.target.closest("[data-cat]"); if(!b) return;
-  $("#icat").value = $("#icat").value===b.dataset.cat ? "" : b.dataset.cat; renderCatPills();
+  $("#icat").value = $("#icat").value===b.dataset.cat ? "" : b.dataset.cat; renderCatPills(); if (!curPhoto) renderPh();
 });
-$("#icat").addEventListener("input", renderCatPills);
+$("#icat").addEventListener("input", ()=>{ renderCatPills(); if (!curPhoto) renderPh(); });
 document.querySelector(".steppers").addEventListener("click", e=>{
   const b = e.target.closest("button[data-k]"); if(!b) return;
   counts[b.dataset.k] = Math.max(0, counts[b.dataset.k] + Number(b.dataset.d)); setCounts();
@@ -710,7 +926,7 @@ $("#editForm").addEventListener("submit", async e=>{
   const it = {
     ...(editing||{}), id: editing?.id || newId(),
     name, series: curSeries, category: $("#icat").value.trim(), character: $("#ichar").value.trim(),
-    price: $("#iprice").value.trim(), release: $("#irel").value.trim(), listPrice: $("#ilist").value.trim(), memo: $("#imemo").value.trim(),
+    price: $("#iprice").value.trim(), release: $("#irel").value.trim(), listPrice: $("#ilist").value.trim(), memo: $("#imemo").value.trim(), photo: curPhoto,
     keep: counts.keep, trade: counts.trade, sell: counts.sell,
     fav: $("#tfav").getAttribute("aria-pressed")==="true",
     want: $("#twant").getAttribute("aria-pressed")==="true",
@@ -762,16 +978,17 @@ const MCP_ERR = {
   blocked_by_policy:"ネット検索が使えない設定のため、Claudeの知識だけで探しました。"
 };
 const host = u => { try{ return new URL(u).hostname.replace(/^www\./,""); }catch{ return ""; } };
-const TRUSTED = ["animate-onlineshop.jp","animate.co.jp","jumpshop-benelic.com","jumpshop-online.com","colleize.com","amiami.jp","amiami.com","stellaworth.co.jp","ensky.co.jp","enskyshop.com","store.kadokawa.co.jp","p-bandai.jp","chugai-contents.jp","konami.com","konamistyle.jp","tenipuri.jp","tennimu.com","tennimu-store.jp","movic.jp","broccolionline.jp","broccoli.co.jp","sukiplus.com","gamers.co.jp","goodsmile.com","goodsmile.info","square-enix.com","cospa.com","eeo.today","collabo-cafe.com","ota-goods.info"];
+const TRUSTED = ["starto.jp","famikura-store.jp","snowman-information.com","otaroom-media.com","tower.jp","hmv.co.jp","books.rakuten.co.jp","7net.omni7.jp","animate-onlineshop.jp","animate.co.jp","jumpshop-benelic.com","jumpshop-online.com","colleize.com","amiami.jp","amiami.com","stellaworth.co.jp","ensky.co.jp","enskyshop.com","store.kadokawa.co.jp","p-bandai.jp","chugai-contents.jp","konami.com","konamistyle.jp","tenipuri.jp","tennimu.com","tennimu-store.jp","movic.jp","broccolionline.jp","broccoli.co.jp","sukiplus.com","gamers.co.jp","goodsmile.com","goodsmile.info","square-enix.com","cospa.com","eeo.today","collabo-cafe.com","ota-goods.info"];
 const trusted = u => { const h = host(u); return !!h && TRUSTED.some(d => h===d || h.endsWith("."+d)); };
 const SHOPS = {
   tp: ["animate-onlineshop.jp","jumpshop-benelic.com","colleize.com","amiami.jp","enskyshop.com","chugai-contents.jp"],
   gs: ["animate-onlineshop.jp","stellaworth.co.jp","colleize.com","amiami.jp","store.kadokawa.co.jp","konamistyle.jp"],
+  sm: ["starto.jp","famikura-store.jp","snowman-information.com","otaroom-media.com","tower.jp","hmv.co.jp"],
   other: ["animate-onlineshop.jp","colleize.com","amiami.jp","stellaworth.co.jp","jumpshop-benelic.com","enskyshop.com"]
 };
 async function webSearch(q){
-  const kw = {tp:"新テニスの王子様", gs:"ときめきメモリアル Girl's Side", other:""}[curSeries];
-  const short = {tp:"テニプリ", gs:"ときメモGS", other:""}[curSeries];
+  const kw = {tp:"新テニスの王子様", gs:"ときめきメモリアル Girl's Side", sm:"Snow Man", other:""}[curSeries];
+  const short = {tp:"テニプリ", gs:"ときメモGS", sm:"スノーマン", other:""}[curSeries];
   const objective = `${kw}の公式グッズ「${q}」の商品名、キャラクター、種類、発売日、価格がわかる商品ページや商品一覧`;
   const shops = SHOPS[curSeries] || SHOPS.other;
   const siteQ = shops.map(d => `site:${d} ${kw} ${q}`.replace(/\s+/g," ").trim());
@@ -855,9 +1072,9 @@ $("#fgo").onclick = async ()=>{
   if (signal.aborted){ $("#fgo").disabled = false; return; }
   const web = !!(pages && pages.length);
   $("#fstatus").textContent = web ? "検索結果から候補をまとめています…" : "候補を探しています…（数十秒かかることがあります）";
-  const seriesName = {tp:"テニスの王子様（新テニスの王子様を含む）",gs:"ときめきメモリアル Girl's Side（GS1〜GS4）",other:"テニスの王子様 または ときめきメモリアル Girl's Side"}[curSeries];
-  const common = `- series は "tp"（テニスの王子様）か "gs"（ときメモGS）か "other"。
-- category は 缶バッジ／アクリルスタンド／アクリルキーホルダー／ブロマイド／クリアファイル／ラバーストラップ／ぬいぐるみ／色紙／タペストリー／CD／DVD・Blu-ray／書籍・雑誌／ポストカード／トレーディングカード／その他 のいずれか。
+  const seriesName = {tp:"テニスの王子様（新テニスの王子様を含む）",gs:"ときめきメモリアル Girl's Side（GS1〜GS4）",sm:"Snow Man（STARTO ENTERTAINMENT所属のアイドルグループ。ライブグッズ、公式写真、CD・DVD、雑誌など）",other:"テニスの王子様、ときめきメモリアル Girl's Side、Snow Man のいずれか"}[curSeries];
+  const common = `- series は "tp"（テニスの王子様）か "gs"（ときメモGS）か "sm"（Snow Man）か "other"。Snow Man の場合、character にはメンバー名（岩本照、目黒蓮など。個人種のうちメンバーがわからなければ空）を入れる。
+- category は 缶バッジ／アクリルスタンド／アクリルキーホルダー／ブロマイド／クリアファイル／ラバーストラップ／ぬいぐるみ／色紙／タペストリー／CD／DVD・Blu-ray／書籍・雑誌／ポストカード／トレーディングカード／うちわ／ペンライト／公式写真／ステッカー／ウェア・タオル／その他 のいずれか。
 - キャラが複数・ランダムの商品は character を空文字にする。
 - 当てはまるものがなければ items を空配列にする。
 
@@ -917,7 +1134,7 @@ $("#fadd").onclick = async ()=>{
   $("#fadd").disabled = true;
   let ok = 0;
   for (const c of chosen){
-    const series = ["tp","gs","other"].includes(c.series) ? c.series : curSeries;
+    const series = ["tp","gs","sm","other"].includes(c.series) ? c.series : curSeries;
     try{
       await putItem({id:newId(), name:String(c.name).slice(0,200), series, character:String(c.character||"").slice(0,60),
         category:String(c.category||"").slice(0,40), release:String(c.release||"").slice(0,40),
@@ -977,9 +1194,10 @@ $("#bkFile").onchange = async e=>{
   const clean = list.filter(x => x && typeof x.name === "string" && x.name.trim()).slice(0,3000).map(x => {
     const o = {id: typeof x.id === "string" && /^[\w-]{1,60}$/.test(x.id) ? x.id : newId()};
     for (const k of TEXT) o[k] = String(x[k] ?? "").slice(0, k==="memo" ? 1000 : 200);
-    o.series = ["tp","gs","other"].includes(x.series) ? x.series : "other";
+    o.series = ["tp","gs","sm","other"].includes(x.series) ? x.series : "other";
     o.keep = n(x.keep); o.trade = n(x.trade); o.sell = n(x.sell);
     o.fav = !!x.fav; o.want = !!x.want;
+    if (isPhoto(x.photo) && x.photo.length < 300000) o.photo = x.photo;
     o.createdAt = Number(x.createdAt) || Date.now(); o.updatedAt = Number(x.updatedAt) || Date.now();
     return o;
   });
@@ -1070,14 +1288,22 @@ function prefill(){
     $("#pChars").value = uniq(items.filter(i=>i.want && names.has(i.name) && !picked.has(i.id)).map(i=>i.character)).join("・");
   }
 }
-function renderPost(){
+function buildPosts(){
   const want = ptype==="both" ? `同種（${$("#pChars").value.trim()}）or 各定価＋送料` : $("#pWant").value.trim();
-  $("#postText").value = TPL[ptype]({name:$("#pName").value.trim(), give:$("#pGive").value.trim(), want});
-  updW();
+  return [TPL[ptype]({name: $("#pName").value.trim(), give: $("#pGive").value.trim(), want})];
 }
-function updW(){
-  const left = Math.floor((LIMIT - weight($("#postText").value)) / 2);
-  const s = $("#pW");
+function renderPost(){
+  const posts = buildPosts();
+  $("#posts").innerHTML = posts.map((p, i) => `<div class="post">
+    <div class="meta"><span>${posts.length > 1 ? `投稿文 ${i+1}/${posts.length}` : "投稿文"}</span><span data-w></span></div>
+    <textarea class="in" aria-label="投稿文${i+1}">${esc(p)}</textarea>
+    <div class="menu"><button type="button" class="btn small primary" data-copy>${posts.length > 1 ? `${i+1}つ目をコピー` : "コピーする"}</button></div>
+  </div>`).join("");
+  $("#posts").querySelectorAll(".post").forEach(updW);
+}
+function updW(box){
+  const left = Math.floor((LIMIT - weight(box.querySelector("textarea").value)) / 2);
+  const s = box.querySelector("[data-w]");
   s.textContent = left >= 0 ? `あと${left}文字` : `${-left}文字オーバー`;
   s.classList.toggle("over", left < 0);
 }
@@ -1100,8 +1326,8 @@ $("#pType").addEventListener("click", e=>{
   syncType(); prefill(); renderPost();
 });
 ["#pName","#pGive","#pWant","#pChars"].forEach(id=>$(id).addEventListener("input", renderPost));
-$("#postText").addEventListener("input", updW);
-$("#pCopy").onclick = () => copyText($("#postText"));
+$("#posts").addEventListener("input", e => { const b = e.target.closest(".post"); if (b) updW(b); });
+$("#posts").addEventListener("click", e => { const b = e.target.closest("[data-copy]"); if (b) copyText(b.closest(".post").querySelector("textarea")); });
 $("#pDone").onclick = ()=>{ $("#postDlg").close(); setSelecting(false); };
 
 let tt;
